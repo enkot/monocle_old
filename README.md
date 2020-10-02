@@ -1,4 +1,4 @@
-![alt text](https://github.com/enkot/monocle/blob/master/src/assets/logo.svg?raw=true)
+![alt text](https://github.com/enkot/monocle/blob/master/src/renderer/assets/logo.svg?raw=true)
 
 Monocle is an unofficial Monobank desktop app.
 

@@ -51,10 +51,7 @@
     },
     "linux": {
       "icon": "build/icons"
-    },
-    "asarUnpack": [
-      "./node_modules/node-notifier/**"
-    ]
+    }
   },
   "dependencies": {
     "axios": "^0.18.0",
