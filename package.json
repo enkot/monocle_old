@@ -1,71 +1,141 @@
 {
-  "name": "monocle",
-  "version": "0.1.0",
-  "private": true,
-  "homepage": "http://getmonocle.pp.ua",
-  "author": {
-    "name": "Enkot",
-    "email": "taras.batenkov@gmail.com"
-  },
+  "name": "monocle-3",
+  "version": "0.0.1",
+  "author": "Enkot <taras.batenkov@gmail.com>",
+  "description": "An electron-vue project",
+  "license": null,
+  "main": "./dist/electron/main.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "electron:build": "vue-cli-service electron:build",
-    "electron:serve": "vue-cli-service electron:serve",
-    "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "rebuild": "electron-rebuild",
+    "build": "node .electron-vue/build.js && electron-builder",
+    "build:dir": "node .electron-vue/build.js && electron-builder --dir",
+    "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
+    "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
+    "dev": "node .electron-vue/dev-runner.js",
+    "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src",
+    "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src",
+    "pack": "npm run pack:main && npm run pack:renderer",
+    "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
+    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
+    "postinstall": "npm run lint:fix"
   },
-  "main": "background.js",
-  "mac": {
-    "icon": "./public/logo.png"
-  },
-  "win": {
-    "icon": "./public/logo.png"
+  "build": {
+    "productName": "monocle-3",
+    "appId": "com.example.yourapp",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "dist/electron/**/*"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
+    "mac": {
+      "icon": "build/icons/icon.icns"
+    },
+    "win": {
+      "icon": "build/icons/icon.ico"
+    },
+    "linux": {
+      "icon": "build/icons"
+    },
+    "asarUnpack": [
+      "./node_modules/node-notifier/**"
+    ]
   },
   "dependencies": {
-    "@tailwindcss/typography": "^0.2.0",
-    "axios": "^0.19.2",
-    "bottleneck": "^2.19.5",
-    "copy-webpack-plugin": "^6.0.3",
-    "core-js": "^3.6.5",
+    "axios": "^0.18.0",
     "currency-codes": "^2.1.0",
     "currency-symbol-map": "^4.0.4",
-    "dayjs": "^1.8.23",
-    "electrolytic": "^0.0.3",
-    "electron-better-ipc": "^1.1.0",
+    "electron-better-ipc": "^1.1.1",
+    "electron-promise-ipc": "^2.2.1",
     "electron-push-receiver": "^2.1.3",
-    "electron-store": "^6.0.0",
-    "firebase": "^7.13.1",
-    "request-rate-limiter": "^2.0.3",
-    "swiper": "^5.3.6",
-    "v-click-outside": "^3.0.1",
-    "vue": "^2.6.11",
-    "vue-awesome-swiper": "^4.0.4",
-    "vue-dayjs": "^1.0.2",
+    "electron-windows-notifications": "^3.0.6",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-mac-notifier": "^1.2.0",
+    "node-notifier": "^8.0.0",
+    "node-notifier-in-electron-vue": "^5.4.2",
+    "swiper": "^5.4.2",
+    "tailwindcss": "^1.8.10",
+    "v-click-outside": "^3.1.2",
+    "vue": "^2.5.16",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-dayjs-plugin": "^1.0.0",
+    "vue-electron": "^1.0.6",
     "vue-loading-template": "^1.3.2",
     "vue-numeric": "^2.3.0",
-    "vue-router": "^3.2.0",
-    "vuex": "^3.4.0"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1",
+    "vuex-electron": "^1.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.4.0",
-    "@vue/cli-plugin-eslint": "~4.4.0",
-    "@vue/cli-plugin-router": "~4.4.0",
-    "@vue/cli-plugin-vuex": "~4.4.0",
-    "@vue/cli-service": "~4.4.0",
     "@vue/eslint-config-prettier": "^6.0.0",
-    "babel-eslint": "^10.1.0",
-    "electron": "^9.0.0",
-    "electron-devtools-installer": "^3.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-prettier": "^3.1.3",
-    "eslint-plugin-vue": "^6.2.2",
-    "prettier": "^1.19.1",
-    "vue-cli-plugin-electron-builder": "~2.0.0-rc.4",
-    "vue-cli-plugin-tailwind": "^1.4.1",
-    "vue-svg-loader": "^0.16.0",
-    "vue-template-compiler": "^2.6.11"
+    "ajv": "^6.5.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-loader": "^7.1.4",
+    "babel-minify-webpack-plugin": "^0.3.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babili-webpack-plugin": "^0.1.2",
+    "cfonts": "^2.1.2",
+    "chalk": "^2.4.1",
+    "copy-webpack-plugin": "^4.5.1",
+    "cross-env": "^5.1.6",
+    "css-loader": "^0.28.11",
+    "del": "^3.0.0",
+    "devtron": "^1.4.0",
+    "electron": "^2.0.4",
+    "electron-builder": "^22.8.1",
+    "electron-debug": "^1.5.0",
+    "electron-devtools-installer": "^2.2.4",
+    "electron-rebuild": "^2.0.3",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-html": "^4.0.3",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "0.4.0",
+    "multispinner": "^0.2.1",
+    "node-loader": "^0.6.0",
+    "postcss": "^8.0.8",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^4.0.2",
+    "postcss-preset-env": "^6.7.0",
+    "style-loader": "^0.21.0",
+    "url-loader": "^1.0.1",
+    "vue-html-loader": "^1.2.4",
+    "vue-loader": "^14.0.0",
+    "vue-style-loader": "^4.1.0",
+    "vue-svg-loader": "^0.17.0-beta.2",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-hot-middleware": "^2.22.2",
+    "webpack-merge": "^4.1.3"
   }
 }

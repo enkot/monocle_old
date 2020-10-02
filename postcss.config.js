@@ -1,8 +1,8 @@
 module.exports = {
-  plugins: {
-    tailwindcss: {},
-    'vue-cli-plugin-tailwind/purgecss': {
-      whitelistPatterns: [/swiper/, /bg-/]
-    }
-  }
+  plugins: [
+    require('postcss-import'),
+    require('postcss-preset-env')({ stage: 0 }),
+    require('tailwindcss')('./tailwind.js'),
+    require('autoprefixer')()
+  ]
 }
