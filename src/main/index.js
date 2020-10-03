@@ -147,7 +147,7 @@ function createMenu() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 }
 
-if (process.platform !== 'darwin') {
+if (process.platform === 'darwin') {
   app.dock.hide()
 }
 
