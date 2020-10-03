@@ -79,7 +79,7 @@ function createWindow() {
     resizable: false,
     fullscreenable: false,
     transparent: true,
-    // alwaysOnTop: true,
+    skipTaskbar: true,
     icon: path.join(__static, 'icons/mac/icon.icns'),
   })
 
@@ -148,6 +148,18 @@ function createMenu() {
 }
 
 app.dock.hide()
+
+const shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
+  // Someone tried to run a second instance, we should focus our window.
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.focus();
+  }
+});
+
+if (shouldQuit) {
+  app.quit();
+}
 
 app.on('ready', () => {
   createTray()
