@@ -50,6 +50,7 @@
     "currency-symbol-map": "^4.0.4",
     "electron-promise-ipc": "^2.2.1",
     "electron-push-receiver": "^2.1.3",
+    "electron-tray-window": "^1.2.5",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^6.2.2",
     "swiper": "^5.4.2",
