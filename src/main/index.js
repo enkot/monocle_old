@@ -147,7 +147,9 @@ function createMenu() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 }
 
-app.dock.hide()
+if (process.platform !== 'darwin') {
+  app.dock.hide()
+}
 
 const shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
   // Someone tried to run a second instance, we should focus our window.
