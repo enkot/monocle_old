@@ -54,6 +54,13 @@ function showWindow() {
 function createTray() {
   /* eslint-disable */
   tray = new Tray(path.join(__static, 'tray.png'))
+  tray.on('right-click', (event) => tray.popUpContextMenu(Menu.buildFromTemplate([
+    {
+      label: 'Quit',
+      type: 'normal',
+      click: () => app.quit()
+    }
+  ])))
   /* eslint-enable */
   tray.on('click', () => {
     toggleWindow()
@@ -72,9 +79,13 @@ function createWindow() {
     resizable: false,
     fullscreenable: false,
     transparent: true,
-    alwaysOnTop: true,
+    // alwaysOnTop: true,
     icon: path.join(__static, 'icons/mac/icon.icns'),
   })
+
+  mainWindow.setAlwaysOnTop(true, 'floating', 1);
+  // allows the window to show over a fullscreen window
+  mainWindow.setVisibleOnAllWorkspaces(true);
 
   mainWindow.loadURL(winURL)
 
@@ -135,6 +146,8 @@ function createMenu() {
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 }
+
+app.dock.hide()
 
 app.on('ready', () => {
   createTray()
