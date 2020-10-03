@@ -3,8 +3,6 @@
 import path from 'path'
 import { app, BrowserWindow, Tray } from 'electron'
 import { setup as setupPushReceiver } from 'electron-push-receiver'
-// import { register, listen } from 'push-receiver'
-// import notifier from 'node-notifier'
 import '../renderer/store'
 
 const Menu = require('electron').Menu
@@ -85,36 +83,10 @@ function createWindow() {
     mainWindow = null
   })
 
-  // mainWindow.on('blur', () => {
-  //   mainWindow.hide()
-  // })
+  mainWindow.on('blur', () => {
+    mainWindow.hide()
+  })
 }
-
-// async function setupPushReceiver() {
-//   const credentials = await register('989266014492')
-//   console.log('credentials.fcm.token', credentials.fcm.token)
-//   setTimeout(() => {
-//     notifier.notify(credentials.fcm.token)
-//   }, 6000)
-
-//   notifier.on('click', (notifierObject, options, event) => {
-//     clipboard.writeText(options.message)
-//   })
-
-//   const persistentIds = []
-//   await listen({ ...credentials, persistentIds }, ({notification}) => {
-//     try {
-//       const { data } = JSON.parse(notification.data.body)
-
-//       notifier.notify({
-//         title: data.statementItem.description,
-//         message: data.statementItem.amount
-//       })
-//     } catch (e) {
-//       console.log(e)
-//     }
-//   })
-// }
 
 function createMenu() {
   const application = {

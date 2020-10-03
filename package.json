@@ -1,5 +1,5 @@
 {
-  "name": "monocle-3",
+  "name": "monocle",
   "version": "0.0.1",
   "author": "Enkot <taras.batenkov@gmail.com>",
   "description": "An electron-vue project",
@@ -20,7 +20,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "monocle-3",
+    "productName": "monocle",
     "appId": "com.example.yourapp",
     "directories": {
       "output": "build"

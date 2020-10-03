@@ -1,9 +1,7 @@
+import { ipcRenderer } from 'electron'
 import Vue from 'vue'
 import vClickOutside from 'v-click-outside'
 import VueNumeric from 'vue-numeric'
-
-import { ipcRenderer, clipboard } from 'electron'
-import Not from 'node-mac-notifier'
 
 import App from './App'
 import axios from './axios'
@@ -21,16 +19,14 @@ import {
   TOKEN_UPDATED
 } from 'electron-push-receiver/src/constants'
 
-// const appId = 'electron-windows-notifications'
-// const {ToastNotification, Template} = require('electron-windows-notifications')
-
 // Listen for service successfully started
 ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, async(_, token) => {
   console.log('service successfully started', token)
-  // betterIpc.callMain('setWebhook', token)
-  clipboard.writeText(token)
+
+  // clipboard.writeText(token)
+  
   /* eslint-disable */
-  new Not('TOKEN', {
+  new Notification('TOKEN', {
     body: token
   })
   // await store.dispatch('setWebhook', token)
@@ -44,29 +40,18 @@ ipcRenderer.on(NOTIFICATION_SERVICE_ERROR, (_, error) => {
 // Send FCM token to backend
 ipcRenderer.on(TOKEN_UPDATED, (_, token) => {
   console.log('token updated', token)
-  // betterIpc.callMain('setWebhook', token)
 })
 
 // Display notification
-ipcRenderer.on(NOTIFICATION_RECEIVED, (_, notification) => {
+ipcRenderer.on(NOTIFICATION_RECEIVED, async(_, notification) => {
   console.log('notification', notification)
   try {
     const { data } = JSON.parse(notification.data.body)
 
     /* eslint-disable */
-    new Not(data.statementItem.description, {
+    new Notification(data.statementItem.description, {
       body: data.statementItem.amount
     })
-    // const template = new Template({
-    //   templateText: '<text>%s</text>'
-    // })
-    // const notification = new ToastNotification({
-    //   appId: appId,
-    //   template: template.getXML(),
-    //   strings: [data.statementItem.description]
-    // })
-  
-    // notification.show()
   } catch (e) {
     console.log(e)
   }
