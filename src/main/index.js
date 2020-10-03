@@ -72,7 +72,8 @@ function createWindow() {
     resizable: false,
     fullscreenable: false,
     transparent: true,
-    alwaysOnTop: true
+    alwaysOnTop: true,
+    icon: path.join(__static, 'icons/mac/icon.icns'),
   })
 
   mainWindow.loadURL(winURL)
